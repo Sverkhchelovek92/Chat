@@ -5,6 +5,7 @@ import { useLocation } from 'react-router-dom'
 const socket = io.connect('http://localhost:5000')
 
 const Chat = () => {
+  const [state, setState] = useState([])
   const { search } = useLocation()
   const [params, setParams] = useState(null)
 
@@ -17,11 +18,12 @@ const Chat = () => {
 
   useEffect(() => {
     socket.on('message', ({ data }) => {
+      setState((_state) => [..._state, data])
       console.log(data)
     })
   }, [])
 
-  console.log(params)
+  console.log(state)
 
   return <div>Chat</div>
 }
